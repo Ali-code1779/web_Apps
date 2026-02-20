@@ -199,20 +199,23 @@
     let currentLang = localStorage.getItem("lang") || "en";
 
     // تحديث النصوص حسب اللغة
-    function applyLanguage(lang) {
-      const t = translations[lang];
-      for (const id in t) {
-        const el = document.getElementById(id);
-        if (el) el.innerText = t[id];
-      }
+	function applyLanguage(lang) {
+  currentLang = lang; // تحديث اللغة الحالية
 
-      document.body.classList.toggle("rtl", lang === "ar");
-      document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
-      document.documentElement.setAttribute("lang", lang);
+  const t = translations[lang];
+  for (const id in t) {
+    const el = document.getElementById(id);
+    if (el) el.innerText = t[id];
+  }
 
-      localStorage.setItem("lang", lang);
-      updateDateTime();
-    }
+  // تثبيت الاتجاه LTR دائمًا
+  document.documentElement.setAttribute("dir", "ltr");
+  document.documentElement.setAttribute("lang", lang);
+
+  localStorage.setItem("lang", lang);
+  updateDateTime();
+}
+
 
     // تحديث التاريخ والوقت كل دقيقة
     const datetime = document.getElementById("datetime");
